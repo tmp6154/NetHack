@@ -279,6 +279,11 @@ msg_window the type of message window to use:                      [single]
            reverse     -- Same as full, but messages printed most-recent-first
            combination -- Two single messages, then as full
 
+Compound option if AUTOSAVE was set at compile time:
+autosave   Save and quit the game automatically, after playing for    [off]
+           N turns (useful if you want to artificially limit the
+           game session duration).
+
 
 Some sample options lists are:
 !autopickup,!tombstone,name:Gandalf,scores:own/3 top/2 around

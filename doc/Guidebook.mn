@@ -3549,6 +3549,12 @@ A value of 0 means \(lqno limit\(rq
 the objects\(rq since the pile size will always be at least that big;
 default value is 5.
 Persistent.
+.lp autosave
+Save and quit the game automatically, after playing for N turns
+\(lquseful if you want to artificially limit the game session duration\(rq.
+A value of -1 (and other negative values) mean that autosave is off, while
+positive values are used for turn countdown until save. 0 is not a valid
+turn count because this would cause the game to quit as soon as it starts.
 .lp playmode
 Values are \(lqnormal\(rq, \(lqexplore\(rq, or \(lqdebug\(rq.
 Allows selection of explore mode (also known as discovery mode) or debug

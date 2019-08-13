@@ -195,6 +195,11 @@ boolean resuming;
                     if (flags.time && !g.context.run)
                         iflags.time_botl = TRUE;
 
+#ifdef AUTOSAVE
+                    if (iflags.autosave > 0)
+                        iflags.autosave--;
+#endif
+
                     /* One possible result of prayer is healing.  Whether or
                      * not you get healed depends on your current hit points.
                      * If you are allowed to regenerate during the prayer,

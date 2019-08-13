@@ -252,6 +252,9 @@ struct instance_flags {
     int menu_headings;    /* ATR for menu headings */
     int *opt_booldup;     /* for duplication of boolean opts in config file */
     int *opt_compdup;     /* for duplication of compound opts in conf file */
+#ifdef AUTOSAVE
+    int autosave;         /* controls, how many turns to wait before autosave */
+#endif
 #ifdef ALTMETA
     boolean altmeta;      /* Alt-c sends ESC c rather than M-c */
 #endif

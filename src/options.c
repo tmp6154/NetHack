@@ -278,6 +278,9 @@ static struct Comp_Opt {
     { "align_message", "message window alignment", 20, DISP_IN_GAME }, /*WC*/
     { "align_status", "status window alignment", 20, DISP_IN_GAME },   /*WC*/
     { "altkeyhandler", "alternate key handler", 20, SET_IN_GAME },
+#ifdef AUTOSAVE
+    { "autosave", "quit game after N turns", 20, SET_IN_GAME },
+#endif
 #ifdef BACKWARD_COMPAT
     { "boulder", "deprecated (use S_boulder in sym file instead)", 1,
       SET_IN_GAME },
@@ -713,6 +716,9 @@ initoptions_init()
     flags.end_around = 2;
     flags.paranoia_bits = PARANOID_PRAY; /* old prayconfirm=TRUE */
     flags.pile_limit = PILE_LIMIT_DFLT;  /* 5 */
+#ifdef AUTOSAVE
+    iflags.autosave = -1;                /* Disabled by default */
+#endif
     flags.runmode = RUN_LEAP;
     iflags.msg_history = 20;
     /* msg_window has conflicting defaults for multi-interface binary */
@@ -3090,6 +3096,30 @@ boolean tinitial, tfrom_file;
             flags.pile_limit = PILE_LIMIT_DFLT;
         return retval;
     }
+
+#ifdef AUTOSAVE
+    /* autosave: play game for N turns, then automatically save-and-quit
+       when safe opportunity presents itself (-1 = no autosave) */
+    fullname = "autosave";
+    if (match_optname(opts, fullname, 5, TRUE)) {
+        if (duplicate)
+            complain_about_duplicate(opts, 1);
+        op = string_for_opt(opts, negated);
+        if ((negated && !op) || (!negated && op))
+            iflags.autosave = negated ? -1 : atoi(op);
+        else if (negated) {
+            bad_negation(fullname, TRUE);
+            return FALSE;
+        } else /* !op */
+            iflags.autosave = -1;
+        /* sanity check - map any negative values to -1 and also map zero to
+           -1 (off) because it doesn't make sense, as it would cause the game
+           to exit as soon as game starts */
+        if (iflags.autosave <= 0)
+            iflags.autosave = -1;
+        return retval;
+    }
+#endif
 
     /* play mode: normal, explore/discovery, or debug/wizard */
     fullname = "playmode";
@@ -5802,6 +5832,11 @@ char *buf;
         Sprintf(buf, "%s", ocl[0] ? ocl : "all");
     } else if (!strcmp(optname, "pile_limit")) {
         Sprintf(buf, "%d", flags.pile_limit);
+#ifdef AUTOSAVE
+    } else if (!strcmp(optname, "autosave")) {
+        (iflags.autosave < 0) ? Strcpy(buf, "off")
+        : Sprintf(buf, "%d", iflags.autosave);
+#endif
     } else if (!strcmp(optname, "playmode")) {
         Strcpy(buf, wizard ? "debug" : discover ? "explore" : "normal");
     } else if (!strcmp(optname, "race")) {

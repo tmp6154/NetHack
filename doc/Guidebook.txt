@@ -3443,6 +3443,14 @@
             command instead.  If no weapon is found or the option is false,
             the `t' (throw) command is executed instead.  Persistent.
 
+          autosave
+            Save and quit the game automatically, after playing for N turns
+            (useful if you want to artificially  limit the game session du-
+            ration).  A value of -1  (and other negative values)  mean that
+            autosave is off, while positive values are used for turn count-
+            down until save. 0 is not a valid turn count because this would
+            cause the game to quit as soon as it starts.
+
           autounlock
             Walking  into a locked door or looting a locked container while
             carrying an unlocking tool (such as a key) will ask whether  to

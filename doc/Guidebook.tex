@@ -3895,6 +3895,13 @@ of showing a popup list of those objects.  A value of 0 means ``no limit''
 the objects'' since the pile size will always be at least that big;
 default value is 5.  Persistent.
 %.lp
+\item[\ib{autosave}]
+Save and quit the game automatically, after playing for N turns
+(useful if you want to artificially limit the game session duration).
+A value of -1 (and other negative values) mean that autosave is off, while
+positive values are used for turn countdown until save. 0 is not a valid
+turn count because this would cause the game to quit as soon as it starts.
+%.lp
 \item[\ib{playmode}]
 Values are {\it normal\/}, {\it explore\/}, or {\it debug\/}.
 Allows selection of explore mode (also known as discovery mode) or debug
